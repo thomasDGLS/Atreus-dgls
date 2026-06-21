@@ -77,6 +77,25 @@ html, body {
   background: #000;
 }
 
+/* ===== Écran vidéo LAPIN ===== */
+.lapin-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: #000;
+  overflow: hidden;
+}
+
+/* Vidéo en fond plein écran, recadrée (cover) comme un vrai arrière-plan */
+.intro-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000;
+}
+
 /* Conteneur du bouton replay + son texte associé : caché par défaut,
    apparaît en fondu (opacity transition) quand la vidéo est finie */
 .replay-wrapper {
@@ -157,7 +176,7 @@ html, body {
 
 #lapinDesign {
   cursor: pointer;
-  text-decoration: underline;
+  text-decoration: none;
   font-weight: bold;
   transition: color 0.2s ease;
 }

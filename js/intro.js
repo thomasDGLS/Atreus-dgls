@@ -17,6 +17,7 @@
   const introScreen = document.getElementById('introScreen');
 
   const video = document.getElementById('introVideo');
+  const lapinVideo = document.getElementById('lapinVideo');
   const music = document.getElementById('bgMusic');
 
   const replayWrapper = document.getElementById('replayWrapper');
@@ -43,21 +44,35 @@
   function hideIntro() {
     introScreen.classList.add('d-none');
   }
+  function showLapin() {
+    lapinVideo.classList.remove('d-none');
+    lunchLapin();
+  }
+  function hideLapin() {
+    lapinVideo.classList.add('d-none');
+  }
+
+  function lunchLapin() {
+    lapinVideo.currentTime = 0;
+    lapinVideo.play().catch(() => {});
+  }
 
   function pauseAll() {
     video.pause();
     music.pause();
+    lapinVideo.pause();
   }
 
   function resumeAll() {
     video.play().catch(() => {});
+    lapinVideo.play().catch(() => {});
     music.play().catch(() => {});
   }
 
   /* ---------- Fin de la vidéo : fondu du bouton replay + texte associé + texte lapin ---------- */
   video.addEventListener('ended', () => {
     replayWrapper.classList.add('visible');
-    lapinWrapper.classList.add('visible'); // ligne ajoutée
+    lapinWrapper.classList.add('visible');
   });
 
   /* ---------- Premier tap : démarre vidéo + musique ensemble ---------- */
@@ -73,7 +88,6 @@
   /* ---------- Fin de la vidéo : fondu du bouton replay + texte associé ---------- */
   video.addEventListener('ended', () => {
     replayWrapper.classList.add('visible');
-
   });
 
   /* ---------- Clic sur replay : relance uniquement la vidéo ---------- */
@@ -83,29 +97,32 @@
     video.play().catch(() => {});
   });
 
-  /* ---------- Effet de zoom : remplace la vidéo par l'image bgGames.jpg ----------
- * Au clic sur #lapinDesign : zoom du cercle, puis pendant que l'écran est
- * recouvert, on coupe la vidéo et on affiche l'image à la place.
- * La musique de fond continue de jouer sans interruption.
- * Le bouton replay (et son texte) sont masqués, car ils n'ont plus de sens
- * une fois qu'il n'y a plus de vidéo à rejouer.
+  /* ---------- remplace la vidéo par lapin.mp4 ----------
+ * Au clic sur #lapinDesign : on lance la deuxième vidéo avec le lapin qui rentre dans le terrier
  */
   lapinDesign.addEventListener('click', () => {
     lapinWrapper.classList.remove('visible');
+    video.pause();
+    video.classList.add('d-none');
+    showLapin();
+    replayWrapper.classList.remove('visible');
+  });
+
+  /* ---------- remplace la vidéo par l'image "bgGames.png" ----------
+  * A la fin de la vidéo : on lance l'image pour de fond pour les jeux
+  */
+  lapinVideo.addEventListener('ended', () => {
+    lapinVideo.pause();
     zoomCircle.classList.add('zooming');
     zoomCircle.addEventListener('transitionend', () => {
-      video.pause();
-      video.classList.add('d-none');
-      replayWrapper.classList.remove('visible');
-      bgGamesImage.classList.remove('d-none');
-
       // Une fois l'image en place, on fait disparaître le cercle noir pour la révéler
       zoomCircle.classList.add('fade-out');
       zoomCircle.addEventListener('transitionend', () => {
         zoomCircle.classList.remove('zooming', 'fade-out');
       }, { once: true });
+      bgGamesImage.classList.remove('d-none');
     }, { once: true });
-  });
+  })
 
   /* ---------- Détection d'orientation ---------- */
   OrientationGuard.init({

@@ -1,0 +1,199 @@
+/* ===== Reset minimal ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+/* ===== Écran de blocage : rotation requise ===== */
+.rotate-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.rotate-content {
+  color: #fff;
+  max-width: 320px;
+}
+.rotate-icon {
+  font-size: 4rem;
+  color: var(--bs-warning);
+  animation: rotateHint 1.8s ease-in-out infinite;
+  display: inline-block;
+}
+@keyframes rotateHint {
+  0%, 100% { transform: rotate(0deg); }
+  50%      { transform: rotate(90deg); }
+}
+
+/* ===== Écran "toucher pour commencer" ===== */
+.tap-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.tap-text {
+  color: #fff;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  opacity: 0.85;
+  animation: tapPulse 2s ease-in-out infinite;
+  margin: 0;
+}
+@keyframes tapPulse {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1; }
+}
+
+/* ===== Écran vidéo d'intro ===== */
+.intro-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: #000;
+  overflow: hidden;
+}
+
+/* Vidéo en fond plein écran, recadrée (cover) comme un vrai arrière-plan */
+.intro-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000;
+}
+
+/* Conteneur du bouton replay + son texte associé : caché par défaut,
+   apparaît en fondu (opacity transition) quand la vidéo est finie */
+.replay-wrapper {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.8s ease;
+  z-index: 3;
+}
+.replay-wrapper.visible {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.intro-replay-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.92);
+  color: #111;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.intro-replay-btn:hover {
+  background: #fff;
+  transform: scale(1.08);
+}
+
+/* Texte "Rejouer la vidéo" : caché par défaut, apparaît en fondu au survol du groupe */
+.replay-label {
+  color: #fff;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.replay-wrapper:hover .replay-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Texte centré : caché par défaut, apparaît en fondu (opacity transition) quand la vidéo est finie */
+.lapin-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 20px 80px;
+  background-color: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 3.4rem;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.8s ease;
+  z-index: 3;
+}
+.lapin-wrapper.visible {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+#lapinDesign {
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+#lapinDesign:hover {
+  color: var(--bs-warning);
+}
+
+/* Image de fond qui remplace la vidéo après le zoom */
+.bg-games-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Cercle utilisé pour l'effet de zoom plein écran (réutilisable, ex. clic sur un texte plus tard) */
+.zoom-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: #000;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 1;
+  z-index: 2;
+  pointer-events: none;
+}
+.zoom-circle.zooming {
+  transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+  transform: translate(-50%, -50%) scale(40);
+}
+.zoom-circle.fade-out {
+  transition: opacity 0.5s ease;
+  opacity: 0;
+}

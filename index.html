@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr" data-bs-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Les énigmes d'Atreus</title>
+
+<!-- Bootstrap 5 -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ===== Écran de blocage : rotation requise (mobile uniquement) ===== -->
+<div id="rotateScreen" class="rotate-screen d-none">
+  <div class="rotate-content text-center">
+    <i class="fa-solid fa-mobile-screen-button rotate-icon"></i>
+    <h2 class="mt-3">Tourne ton téléphone</h2>
+    <p class="text-muted">Merci de passer en mode paysage pour continuer l'expérience.</p>
+  </div>
+</div>
+
+<!-- ===== Écran "toucher pour commencer" ===== -->
+<div id="tapScreen" class="tap-screen d-none">
+  <p class="tap-text">Toucher pour commencer</p>
+</div>
+
+<!-- ===== Écran vidéo d'intro ===== -->
+<div id="introScreen" class="intro-screen d-none">
+  <video id="introVideo" class="intro-video" muted playsinline>
+    <source src="assets/Intro.mp4" type="video/mp4">
+  </video>
+
+  <!-- Musique de fond -->
+  <audio id="bgMusic" loop>
+    <source src="assets/bgTheme.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Image de fond qui remplace la vidéo après le zoom -->
+  <img id="bgGamesImage" src="assets/bgGames.png" alt="" class="bg-games-image d-none">
+
+  <!-- Bouton replay + texte associé : invisibles au départ, apparaissent en fondu en fin de vidéo -->
+  <div id="replayWrapper" class="replay-wrapper">
+    <button id="introReplayBtn" class="intro-replay-btn">
+      <i class="fa-solid fa-rotate-left"></i>
+    </button>
+    <span class="replay-label">Rejouer la vidéo</span>
+  </div>
+
+  <div id="lapinWrapper" class="lapin-wrapper">
+    Cliquez sur <span id="lapinDesign">lapin</span>
+  </div>
+
+  <!-- Cercle utilisé pour l'effet de zoom plein écran -->
+  <div id="zoomCircle" class="zoom-circle"></div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="js/orientation.js"></script>
+<script src="js/intro.js"></script>
+</body>
+</html>

@@ -1,61 +1,33 @@
 /**
  * intro.js
  * Déroulé :
- *   1. Écran noir "Toucher pour commencer" : nécessaire car les navigateurs
- *      bloquent toute lecture audio avec son sans interaction utilisateur.
- *      Ce tap lance EN MÊME TEMPS la vidéo (muette) et la musique (avec son).
- *   2. La vidéo joue en fond, sans aucun contrôle visible.
- *   3. À la fin de la vidéo (ended), un bouton "replay" apparaît en fondu
- *      en bas à gauche. Il permet de rejouer uniquement la vidéo
- *      (la musique continue sa lecture sans être affectée).
- *   4. La fonction triggerZoomTransition() est exposée globalement (window)
- *      pour être appelée plus tard ailleurs (ex: clic sur un texte) afin de
- *      déclencher l'effet de zoom plein écran suivi d'un changement de page.
+ *  1. Tap → vidéo intro + musique se lancent simultanément.
+ *  2. Fin vidéo intro → bouton replay + texte "lapin" apparaissent en fondu.
+ *  3. Clic "lapin" → vidéo lapin se lance, replay et texte disparaissent.
+ *  4. Fin vidéo lapin → zoom noir → bgGames.png révélée + GameManager.show().
  */
 (function () {
-  const tapScreen = document.getElementById('tapScreen');
-  const introScreen = document.getElementById('introScreen');
-
-  const video = document.getElementById('introVideo');
-  const lapinVideo = document.getElementById('lapinVideo');
-  const music = document.getElementById('bgMusic');
-
+  const STORAGE_KEY_INTRO  = 'atreus_intro_seen';
+  const STORAGE_KEY_GAMES  = 'atreus_games_completed';
+  const STORAGE_KEY_DIGITS = 'atreus_game_digits';
+  const tapScreen    = document.getElementById('tapScreen');
+  const introScreen  = document.getElementById('introScreen');
+  const video        = document.getElementById('introVideo');
+  const lapinVideo   = document.getElementById('lapinVideo');
+  const music        = document.getElementById('bgMusic');
   const replayWrapper = document.getElementById('replayWrapper');
-  const replayBtn = document.getElementById('introReplayBtn');
-
-  const bgGamesImage = document.getElementById('bgGamesImage');
-
-  const lapinDesign = document.getElementById('lapinDesign');
+  const replayBtn    = document.getElementById('introReplayBtn');
   const lapinWrapper = document.getElementById('lapinWrapper');
+  const lapinDesign  = document.getElementById('lapinDesign');
+  const bgGamesImage = document.getElementById('bgGamesImage');
+  const zoomCircle   = document.getElementById('zoomCircle');
+  const gameProgress              = document.getElementById('progressToggle');
 
-  const zoomCircle = document.getElementById('zoomCircle');
+  let experienceStarted = false;
 
-  let experienceStarted = false; // true après le premier tap (musique/vidéo lancées au moins une fois)
-
-  function showTapScreen() {
-    tapScreen.classList.remove('d-none');
-  }
-  function hideTapScreen() {
-    tapScreen.classList.add('d-none');
-  }
-  function showIntro() {
-    introScreen.classList.remove('d-none');
-  }
-  function hideIntro() {
-    introScreen.classList.add('d-none');
-  }
-  function showLapin() {
-    lapinVideo.classList.remove('d-none');
-    lunchLapin();
-  }
-  function hideLapin() {
-    lapinVideo.classList.add('d-none');
-  }
-
-  function lunchLapin() {
-    lapinVideo.currentTime = 0;
-    lapinVideo.play().catch(() => {});
-  }
+  /* ---------- Utilitaires ---------- */
+  const show = el => el.classList.remove('d-none');
+  const hide = el => el.classList.add('d-none');
 
   function pauseAll() {
     video.pause();
@@ -63,85 +35,125 @@
     lapinVideo.pause();
   }
 
-  function resumeAll() {
-    video.play().catch(() => {});
-    lapinVideo.play().catch(() => {});
+  function resumeMain() {
+    if (!video.ended) video.play().catch(() => {});
     music.play().catch(() => {});
   }
 
-  /* ---------- Fin de la vidéo : fondu du bouton replay + texte associé + texte lapin ---------- */
+  /* ---------- 1. Premier tap ---------- */
+  tapScreen.addEventListener('click', () => {
+    experienceStarted = true;
+    hide(tapScreen);
+    show(introScreen);
+
+    // A-t-on déjà vu l'intro ?
+    if (localStorage.getItem(STORAGE_KEY_INTRO) === 'true') {
+      // Passe directement à l'état post-intro
+      hide(video);
+      lapinWrapper.classList.add('visible');
+      replayWrapper.classList.add('visible');
+    } else {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+    }
+    music.play().catch(() => {});
+  }, { once: true });
+
+  /* ---------- 2. Fin vidéo intro : bouton replay + texte lapin ---------- */
   video.addEventListener('ended', () => {
+    localStorage.setItem(STORAGE_KEY_INTRO, 'true');
     replayWrapper.classList.add('visible');
     lapinWrapper.classList.add('visible');
   });
 
-  /* ---------- Premier tap : démarre vidéo + musique ensemble ---------- */
-  tapScreen.addEventListener('click', () => {
-    experienceStarted = true;
-    hideTapScreen();
-    showIntro();
-    video.currentTime = 0;
-    video.play().catch(() => {});
-    music.play().catch(() => {});
-  }, { once: true });
-
-  /* ---------- Fin de la vidéo : fondu du bouton replay + texte associé ---------- */
-  video.addEventListener('ended', () => {
-    replayWrapper.classList.add('visible');
-  });
-
-  /* ---------- Clic sur replay : relance uniquement la vidéo ---------- */
+  /* ---------- Replay : relance uniquement la vidéo ---------- */
   replayBtn.addEventListener('click', () => {
     replayWrapper.classList.remove('visible');
+    lapinWrapper.classList.remove('visible');
+
+    // S'assure que la vidéo est visible avant de la lancer
+    show(video);
+    hide(lapinVideo);
+
     video.currentTime = 0;
     video.play().catch(() => {});
   });
 
-  /* ---------- remplace la vidéo par lapin.mp4 ----------
- * Au clic sur #lapinDesign : on lance la deuxième vidéo avec le lapin qui rentre dans le terrier
- */
+  /* ---------- 3. Clic lapin → vidéo lapin ---------- */
   lapinDesign.addEventListener('click', () => {
     lapinWrapper.classList.remove('visible');
-    video.pause();
-    video.classList.add('d-none');
-    showLapin();
     replayWrapper.classList.remove('visible');
+    hide(video);
+    show(lapinVideo);
+    lapinVideo.currentTime = 0;
+    lapinVideo.play().catch(() => {});
   });
 
-  /* ---------- remplace la vidéo par l'image "bgGames.png" ----------
-  * A la fin de la vidéo : on lance l'image pour de fond pour les jeux
-  */
+  /* ---------- 4. Fin vidéo lapin → zoom → image + jeux ---------- */
   lapinVideo.addEventListener('ended', () => {
     lapinVideo.pause();
     zoomCircle.classList.add('zooming');
+
     zoomCircle.addEventListener('transitionend', () => {
-      // Une fois l'image en place, on fait disparaître le cercle noir pour la révéler
+      show(bgGamesImage);
+
+      // Vérifie si les jeux étaient déjà complétés
+      if (localStorage.getItem(STORAGE_KEY_GAMES) === 'true') {
+        restoreCompletedGames();
+      } else {
+        GameManager.show();
+      }
+
       zoomCircle.classList.add('fade-out');
       zoomCircle.addEventListener('transitionend', () => {
         zoomCircle.classList.remove('zooming', 'fade-out');
       }, { once: true });
-      bgGamesImage.classList.remove('d-none');
     }, { once: true });
-  })
+  });
 
   /* ---------- Détection d'orientation ---------- */
   OrientationGuard.init({
     onBlocked: () => {
-      if (experienceStarted) {
-        hideIntro();
-        pauseAll();
-      } else {
-        hideTapScreen();
-      }
+      if (experienceStarted) { hide(introScreen); pauseAll(); }
+      else hide(tapScreen);
     },
     onAllowed: () => {
       if (experienceStarted) {
-        showIntro();
-        if (video.paused && !video.ended) resumeAll();
+        show(introScreen);
+        if (video.paused && !video.ended && lapinVideo.paused) resumeMain();
         else if (music.paused) music.play().catch(() => {});
       } else {
-        showTapScreen();
+        show(tapScreen);
       }
     }
+  });
+
+  function restoreCompletedGames() {
+    const digits = JSON.parse(localStorage.getItem(STORAGE_KEY_DIGITS) || '{}');
+
+    // Restaure le panneau de progression
+    [1, 2, 3, 4].forEach(id => {
+      if (digits[id] !== undefined) {
+        document.dispatchEvent(new CustomEvent('enigme:solved', {
+          detail: { enigmaId: id, digit: digits[id] }
+        }));
+      }
+    });
+
+    // Affiche directement la récompense finale
+    // (le GameManager n'a pas besoin d'être affiché)
+    if (typeof showReward === 'function') {
+      setTimeout(() => showReward(), 400);
+    }
+
+    // Affiche le bouton rejouer
+    document.getElementById('replayGamesBtn').classList.remove('d-none');
+  }
+
+  document.getElementById('replayGamesBtn')?.addEventListener('click', () => {
+    // Efface uniquement la progression des jeux, pas l'intro
+    localStorage.removeItem('atreus_games_completed');
+    localStorage.removeItem('atreus_game_digits');
+    location.reload();
   });
 })();

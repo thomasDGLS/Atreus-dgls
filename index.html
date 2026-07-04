@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr" data-bs-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Les énigmes d'Atreus</title>
-
-<!-- Bootstrap 5 -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Les énigmes d'Atreus</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -26,8 +24,9 @@
   <p class="tap-text">Toucher pour commencer</p>
 </div>
 
-<!-- ===== Écran vidéo d'intro ===== -->
+<!-- ===== Écran principal ===== -->
 <div id="introScreen" class="intro-screen d-none">
+
   <video id="introVideo" class="intro-video" muted playsinline>
     <source src="assets/Intro.mp4" type="video/mp4">
   </video>
@@ -36,15 +35,13 @@
     <source src="assets/lapin.mp4" type="video/mp4">
   </video>
 
-  <!-- Musique de fond -->
   <audio id="bgMusic" loop>
     <source src="assets/bgTheme.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Image de fond qui remplace la vidéo après le zoom -->
   <img id="bgGamesImage" src="assets/bgGames.png" alt="" class="bg-games-image d-none">
 
-  <!-- Bouton replay + texte associé : invisibles au départ, apparaissent en fondu en fin de vidéo -->
+  <!-- Bouton replay -->
   <div id="replayWrapper" class="replay-wrapper">
     <button id="introReplayBtn" class="intro-replay-btn">
       <i class="fa-solid fa-rotate-left"></i>
@@ -52,17 +49,217 @@
     <span class="replay-label">Rejouer la vidéo</span>
   </div>
 
+  <!-- Texte lapin -->
   <div id="lapinWrapper" class="lapin-wrapper">
     Cliquez sur le <span id="lapinDesign">lapin</span>
   </div>
 
-  <!-- Cercle utilisé pour l'effet de zoom plein écran -->
+  <!-- Zoom circle -->
   <div id="zoomCircle" class="zoom-circle"></div>
 
+  <!-- ===== Game Stage : conteneur fixe 560×320 avec slides ===== -->
+  <div id="gameStage" class="game-stage d-none">
+    <div class="game-viewport">
+
+      <!-- Slide 1 : Flamant & Hérisson -->
+      <div class="game-slide" id="slide-1">
+        <div class="game-header">
+          <span class="game-title">Épreuve 1 — Flamant &amp; Hérisson</span>
+          <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="right" data-bs-content="Tiens, un nouveau visage… Perdu ? Pas encore ! </br>Vous voici à la première escale de notre folie. Pour passer, il vous faudra jouer au croquet de la Reine. </br>Retenez bien ceci : Faites courber le cou au volatile rose pour propulser la bête piquante sous son arche de cartes. </br>Un coup parfait, et le chemin s'ouvrira. Ratez, et… qu’on leur coupe la tête ! </br>">
+            <i class="fa-solid fa-question"></i>
+          </button>
+        </div>
+        <div class="game-body">
+          <div class="game-zone">
+            <div class="game-start-area">
+              <img id="flamingo" src="assets/pink_flamingo.png" class="game-piece" draggable="true" alt="Flamant rose">
+              <div id="hedgehogDropZone" class="hedgehog-drop-zone">
+                <img id="hedgehog" src="assets/herisson_rose.png" class="game-piece" draggable="false" alt="Hérisson">
+              </div>
+            </div>
+            <div id="finalDropZone" class="final-drop-zone">
+              <img src="assets/goal_rose.png" class="target-spot-img" alt="Zone cible">
+            </div>
+          </div>
+        </div>
+        <!-- footer-1 -->
+        <div class="game-footer d-none" id="footer-1">
+          <button class="nav-btn prev-btn d-none" id="prevBtn1">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <span class="footer-digit" id="footerDigit-1"></span>
+          <button class="nav-btn next-btn" id="nextBtn1">
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Slide 2 : Simon -->
+      <div class="game-slide" id="slide-2">
+        <div class="game-header">
+          <span class="game-title">Épreuve 2 — Mémorise la séquence</span>
+        </div>
+        <div class="game-body">
+          <button class="btn btn-sm btn-outline-info mb-3" id="simonStart">
+            <i class="fa-solid fa-play"></i> Lancer
+          </button>
+          <div class="simon-grid">
+            <button class="simon-btn" data-color="0" style="background:#e53935;"><span style="font-size: 1.5rem;">&hearts;</span></button>
+            <button class="simon-btn" data-color="1" style="background:#1e88e5;"><span style="font-size: 1.5rem;">&diams;</span></button>
+            <button class="simon-btn" data-color="2" style="background:#43a047;"><span style="font-size: 1.5rem;">&spades;</span></button>
+            <button class="simon-btn" data-color="3" style="background:#fdd835;"><span style="font-size: 1.5rem;">&clubs;</span></button>
+          </div>
+        </div>
+        <!-- footer-2 -->
+        <div class="game-footer d-none" id="footer-2">
+          <button class="nav-btn prev-btn" id="prevBtn2">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <span class="footer-digit" id="footerDigit-2"></span>
+          <button class="nav-btn next-btn" id="nextBtn2">
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Slide 3 : Roses -->
+      <div class="game-slide" id="slide-3">
+        <div class="game-header">
+          <span class="game-title">Épreuve 3 — Peins toutes les roses</span>
+        </div>
+        <div class="game-body">
+          <p class="game-instruction">Clique sur chaque rose pour la peindre en rouge.</p>
+          <div class="roses-zone" id="rosesZone">
+            <span class="rose" data-painted="0">🥀</span>
+            <span class="rose" data-painted="0">🥀</span>
+            <span class="rose" data-painted="0">🥀</span>
+            <span class="rose" data-painted="0">🥀</span>
+            <span class="rose" data-painted="0">🥀</span>
+          </div>
+          <div class="chest-wrapper">
+            <span class="chest d-none" id="chestIcon" role="button">📦</span>
+          </div>
+        </div>
+        <div class="game-footer d-none" id="footer-3">
+          <button class="nav-btn prev-btn" id="prevBtn3">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <span class="footer-digit" id="footerDigit-3"></span>
+          <button class="nav-btn next-btn" id="nextBtn3">
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Slide 4 : Swipe -->
+      <div class="game-slide" id="slide-4">
+        <div class="game-header">
+          <span class="game-title">Épreuve 4 — Balaye dans l'ordre</span>
+        </div>
+        <div class="game-body">
+          <p class="game-instruction">
+            Ordre : <strong>↑ ↑ ← → ↑ ↓</strong>
+          </p>
+          <div class="swipe-zone" id="swipeZone" tabindex="0">
+            <i class="fa-solid fa-arrows-up-down-left-right fs-2"></i>
+            <div class="swipe-progress-text" id="swipeProgressText">0 / 6</div>
+            <div class="swipe-indicators" id="swipeIndicators"></div>
+          </div>
+        </div>
+        <div class="game-footer d-none" id="footer-4">
+          <button class="nav-btn prev-btn" id="prevBtn4">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <span class="footer-digit" id="footerDigit-4"></span>
+          <button class="nav-btn next-btn" id="nextBtn4">
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Slide 5 : Cadenas final -->
+      <div class="game-slide" id="slide-5">
+        <div class="game-header">
+          <span class="game-title">Code final — Ouvre le cadenas</span>
+        </div>
+        <div class="game-body">
+          <div class="lock-visual" id="lockVisual">
+            <i class="fa-solid fa-lock fs-1" id="lockIcon"></i>
+          </div>
+          <div class="code-display d-flex gap-2 my-3">
+            <input type="text" inputmode="numeric" maxlength="1" class="code-input" data-idx="0">
+            <input type="text" inputmode="numeric" maxlength="1" class="code-input" data-idx="1">
+            <input type="text" inputmode="numeric" maxlength="1" class="code-input" data-idx="2">
+            <input type="text" inputmode="numeric" maxlength="1" class="code-input" data-idx="3">
+          </div>
+          <div class="lock-msg d-none" id="lockErrorMsg">Code incorrect !</div>
+        </div>
+        <div class="game-footer" id="footer-5">
+          <button class="nav-btn prev-btn" id="prevBtn5">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <span class="footer-digit" id="footerDigit-5"></span>
+          <div></div>
+        </div>
+      </div>
+
+    </div><!-- /.game-viewport -->
+  </div><!-- /#gameStage -->
+
+</div><!-- /#introScreen -->
+
+<!-- Icône flottante progression -->
+<button id="progressToggle" class="progress-toggle d-none">
+  <i class="fa-solid fa-scroll"></i>
+</button>
+
+<!-- Sidebar progression -->
+<div id="progressPanel" class="progress-panel">
+  <div class="progress-panel-header">
+    <span>Progression</span>
+    <button id="progressClose" class="progress-close">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+  <ul class="progress-list" id="progressList"></ul>
+</div>
+<div id="progressOverlay" class="progress-overlay d-none"></div>
+
+<!-- ===== Récompense finale ===== -->
+<div id="rewardOverlay" class="reward-overlay d-none">
+  <div class="reward-backdrop"></div>
+  <div class="reward-box">
+    <div class="reward-chest">
+      <div class="chest-lid">🎁</div>
+    </div>
+    <div class="reward-content">
+      <p class="reward-label">Félicitation !</p>
+      <a id="rewardUrl" class="reward-url" href="#" target="_blank">
+        <!-- URL insérée par JS -->
+      </a>
+    </div>
+    <button id="replayGamesBtn" class="replay-games-btn mt-3">
+      <i class="fa-solid fa-rotate-left"></i> Rejouer
+    </button>
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 <script src="js/orientation.js"></script>
+<script src="js/progress.js"></script>
+<script src="js/game-manager.js"></script>
+<script src="js/game1.js"></script>
+<script src="js/game2-simon.js"></script>
+<script src="js/game3-roses.js"></script>
+<script src="js/game4-swipe.js"></script>
+<script src="js/game5-cadenas.js"></script>
 <script src="js/intro.js"></script>
+<canvas id="confettiCanvas"></canvas>
+<script src="js/confetti.js"></script>
+<script>
+  // Initialise tous les popovers de la page
+  const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+  const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+</script>
 </body>
 </html>

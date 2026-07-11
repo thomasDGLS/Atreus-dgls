@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="36b223c3-6e67-4367-a126-b0c9883568d3" name="Changes" comment="Première fin">
+      <change beforePath="$PROJECT_DIR$/assets/Intro.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Intro.mp4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/cadenas.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/enigme1-dragdrop.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/enigme2-roses.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/enigme3-simon.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/enigme4-puzzle.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/enigme5-swipe.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/game-manager.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/game-manager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/game1.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/game1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/game2-simon.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/game2-simon.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/game3-roses.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/game3-roses.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/game4-swipe.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/game5-cadenas.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/game5-cadenas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/intro.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/intro.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/progress.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/progress.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/state.js" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3FPdxMQt3foLsk9ezrYxFyl9G7j" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/thoma/Documents/Codes/Atreus&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\thoma\Documents\Codes\Atreus" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\thoma\Documents\Codes\Atreus\css" />
+      <recent name="C:\Users\thoma\Documents\Codes\Atreus\js" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.25134.101" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="36b223c3-6e67-4367-a126-b0c9883568d3" name="Changes" comment="" />
+      <created>1781980883254</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1781980883254</updated>
+      <workItem from="1781980884296" duration="6202000" />
+      <workItem from="1782067903123" duration="28000" />
+      <workItem from="1782068270669" duration="1881000" />
+      <workItem from="1782580289247" duration="6142000" />
+      <workItem from="1783017884470" duration="7351000" />
+      <workItem from="1783165518316" duration="6215000" />
+      <workItem from="1783188480970" duration="1000" />
+      <workItem from="1783624348921" duration="7295000" />
+      <workItem from="1783769605425" duration="1430000" />
+    </task>
+    <task id="LOCAL-00001" summary="- Modification de la video d'intro&#10;- Affichage de la vidéo du lapin qui va dans le terrier puis zoom-in and out pour la transition vers le bg des jeux">
+      <option name="closed" value="true" />
+      <created>1782070143854</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1782070143854</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Première fin">
+      <option name="closed" value="true" />
+      <created>1783179053998</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1783179053998</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="- Modification de la video d'intro&#10;- Affichage de la vidéo du lapin qui va dans le terrier puis zoom-in and out pour la transition vers le bg des jeux" />
+    <MESSAGE value="Première fin" />
+    <option name="LAST_COMMIT_MESSAGE" value="Première fin" />
+  </component>
+</project>

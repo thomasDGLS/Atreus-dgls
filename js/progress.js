@@ -11,7 +11,7 @@ const ProgressPanel = (() => {
         { id: 1, name: 'Le flamant et le hérisson'},
         { id: 2, name: 'Les cartes dansante'},
         { id: 3, name: 'Les roses rouges'},
-        { id: 4, name: 'Balayages'},
+        { id: 4, name: 'Le bonneteau du Chapelier'}
     ];
 
     const toggle = document.getElementById('progressToggle');

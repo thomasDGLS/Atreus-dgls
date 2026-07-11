@@ -49,7 +49,6 @@ html, body {
   color: #fff;
   font-size: 1.2rem;
   letter-spacing: 0.05em;
-  opacity: 0.85;
   animation: tapPulse 2s ease-in-out infinite;
   margin: 0;
 }
@@ -66,24 +65,14 @@ html, body {
   background: #000;
   overflow: hidden;
 }
-
-/* Vidéo en fond plein écran */
-.intro-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  background: #000;
-}
-
-/* Image de fond des jeux */
+.intro-video,
 .bg-games-image {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background: #000;
   z-index: 0;
 }
 
@@ -111,7 +100,7 @@ html, body {
   height: 56px;
   border-radius: 50%;
   border: none;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255,255,255,0.92);
   color: #111;
   font-size: 1.3rem;
   display: flex;
@@ -121,10 +110,7 @@ html, body {
   flex-shrink: 0;
   transition: background 0.3s ease, transform 0.3s ease;
 }
-.intro-replay-btn:hover {
-  background: #fff;
-  transform: scale(1.08);
-}
+.intro-replay-btn:hover { background:#fff; transform:scale(1.08); }
 .replay-label {
   color: #fff;
   font-size: 0.95rem;
@@ -143,12 +129,14 @@ html, body {
   position: absolute;
   top: 50%;
   left: 50%;
-  padding: 20px 80px;
-  background-color: rgba(255, 255, 255, 0.5);
   transform: translate(-50%, -50%);
   color: #fff;
-  font-size: 3.4rem;
+  font-size: clamp(1rem, 3.5vw, 3.4rem);
   text-align: center;
+  padding: clamp(10px, 2vw, 20px) clamp(20px, 5vw, 80px);
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  white-space: nowrap;
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
@@ -162,8 +150,7 @@ html, body {
 }
 #lapinDesign {
   cursor: pointer;
-  text-decoration: none;
-  font-weight: bold;
+  text-decoration: underline;
   transition: color 0.2s ease;
 }
 #lapinDesign:hover { color: var(--bs-warning); }
@@ -191,11 +178,11 @@ html, body {
   opacity: 0;
 }
 
-/* =================================================================
+/* ===================================================================
    GAME STAGE
-   Taille fixe 560×320px (optimisé smartphone paysage).
-   Le JS applique un scale() pour s'adapter à tout écran.
-================================================================= */
+   Taille fixe de référence : 560 × 320px (optimisé smartphone paysage)
+   Un scale CSS calculé en JS adapte cette taille à tout écran.
+=================================================================== */
 .game-stage {
   position: absolute;
   z-index: 4;
@@ -203,10 +190,13 @@ html, body {
   height: 320px;
   top: 50%;
   left: 50%;
-  /* Le transform-origin est centré : le scale JS s'ajoute autour de ce point */
+  /* transform-origin centré : le scale JS s'applique depuis le centre */
   transform: translate(-50%, -50%);
+  /* overflow caché : les slides voisines ne "débordent" pas visuellement */
+  overflow: hidden;
 }
 
+/* Viewport interne : même taille que le stage, clips les slides */
 .game-viewport {
   position: relative;
   width: 100%;
@@ -215,10 +205,12 @@ html, body {
   border-radius: 16px;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
-/* ===== Slides ===== */
+/* ===== Slides de jeux ===== */
+/* Chaque slide fait exactement la taille du viewport.
+   Positionnement absolu + translateX pour les faire glisser. */
 .game-slide {
   position: absolute;
   top: 0; left: 0;
@@ -226,91 +218,100 @@ html, body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* Par défaut : hors écran à droite */
+  /* Par défaut toutes les slides sont hors écran à droite */
   transform: translateX(100%);
   transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
   will-change: transform;
 }
-.game-slide.active    { transform: translateX(0%); }
-.game-slide.exit-left { transform: translateX(-100%); }
+/* La slide active est visible */
+.game-slide.active {
+  transform: translateX(0%);
+}
+/* La slide qui sort part à gauche */
+.game-slide.exit-left {
+  transform: translateX(-100%);
+}
 
-/* En-tête */
+/* En-tête du jeu */
 .game-header {
-  padding: 8px 14px 6px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px 16px 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
   flex-shrink: 0;
 }
 .game-title {
-  font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.55);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
-/* Corps */
+/* Corps du jeu : prend tout l'espace restant */
 .game-body {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10px 14px;
+  padding: 12px 16px;
   overflow: hidden;
 }
 
-/* Pied : flèche suivant */
+/* Pied : contient la flèche "suivant", caché jusqu'à la fin du jeu */
 .game-footer {
-  padding: 6px 14px;
+  padding: 8px 16px;
   display: flex;
   justify-content: flex-end;
   flex-shrink: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255,255,255,0.06);
 }
 
-/* Bouton suivant */
+/* Bouton suivant (flèche) */
 .next-btn {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: none;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255,255,255,0.15);
   color: #fff;
-  font-size: 1rem;
+  font-size: 1.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   animation: pulseArrow 1.4s ease-in-out infinite;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 .next-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255,255,255,0.3);
+  transform: scale(1.1);
   animation: none;
 }
 @keyframes pulseArrow {
-  0%, 100% { transform: scale(1);     opacity: 0.8; }
-  50%       { transform: scale(1.1);  opacity: 1;   }
+  0%, 100% { transform: scale(1);    opacity: 0.8; }
+  50%       { transform: scale(1.08); opacity: 1; }
 }
 
-/* =================================================================
+/* ===================================================================
    JEU 1 : Flamant & Hérisson
-================================================================= */
+=================================================================== */
 .game-zone {
   display: flex;
   align-items: center;
   justify-content: space-around;
   width: 100%;
-  gap: 16px;
+  gap: 20px;
 }
+
 .game-start-area {
   display: flex;
   align-items: center;
   gap: 40px;
 }
+
 .hedgehog-drop-zone {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   padding: 6px;
   border-radius: 10px;
   border: 2px dashed transparent;
@@ -318,33 +319,34 @@ html, body {
 }
 .hedgehog-drop-zone.drag-over {
   border-color: var(--bs-warning);
-  background: rgba(255, 193, 7, 0.1);
+  background: rgba(255,193,7,0.1);
 }
+
 .game-piece {
-  width: clamp(40px, 9vw, 72px);
+  width: clamp(40px, 10vw, 70px);
   height: auto;
   cursor: grab;
   user-select: none;
   touch-action: none;
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
-.game-piece.dragging { opacity: 0.4; transform: scale(1.1); }
-.game-piece.locked   { cursor: default; pointer-events: none; opacity: 0.5; }
+.game-piece.dragging  { opacity: 0.4; transform: scale(1.1); }
+.game-piece.locked    { cursor: default; pointer-events: none; opacity: 0.5; }
 
-/* Ghost drag tactile */
+/* Ghost pendant le drag tactile */
 .drag-ghost {
   position: fixed;
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
   opacity: 0.85;
-  width: clamp(40px, 9vw, 72px);
+  width: clamp(40px, 10vw, 70px);
 }
 
 .final-drop-zone {
-  width: clamp(60px, 14vw, 90px);
-  height: clamp(60px, 14vw, 90px);
-  border: 2px dashed rgba(255, 255, 255, 0.25);
+  width: clamp(70px, 16vw, 100px);
+  height: clamp(70px, 16vw, 100px);
+  border: 2px dashed rgba(255,255,255,0.25);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -355,50 +357,144 @@ html, body {
 }
 .final-drop-zone.drag-over {
   border-color: var(--bs-success);
-  background: rgba(25, 135, 84, 0.15);
+  background: rgba(25,135,84,0.15);
 }
 .target-spot-img {
   width: 55%;
   opacity: 0.4;
 }
 
-/* =================================================================
+/* ===================================================================
    JEU 2 : Simon
-================================================================= */
+=================================================================== */
 .simon-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
-  width: 150px;
-  height: 150px;
+  width: 160px;
+  height: 160px;
 }
 .simon-btn {
-  border: 3px solid rgba(255, 255, 255, 0.15);
+  border: 3px solid rgba(255,255,255,0.15);
   border-radius: 12px;
-  opacity: 0.5;
+  opacity: 1;
   cursor: pointer;
   touch-action: manipulation;
   transition: opacity 0.12s ease, transform 0.12s ease;
 }
-.simon-btn:active { transform: scale(0.93); }
-.simon-btn.lit    { opacity: 1; box-shadow: 0 0 18px 4px currentColor; }
+.simon-btn:active  { transform: scale(0.93); }
+.simon-btn.lit     { opacity: 1; box-shadow: 0 0 18px 4px red; }
+.simon-btn > span  { color: black }
+.simon-btn:nth-child(1) > span, .simon-btn:nth-child(4) > span  { color: red }
 
-/* =================================================================
-   PANNEAU DE PROGRESSION
-================================================================= */
+/* ===================================================================
+   JEU 3 : LES ROSES
+=================================================================== */
+
+.rose {
+  font-size: 3rem;
+}
+.grise {
+  filter: grayscale(100%);
+  opacity: 0.7;
+}
+
+.chest {
+  font-size: 3.5rem;
+}
+
+/* ===================================================================
+   JEU 4 : TASSES (Bonneteau)
+=================================================================== */
+.cups-zone {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  margin-top: 20px;
+}
+.cup-wrapper {
+  position: absolute;
+  top: 0;
+  width: 80px;
+  height: 100px;
+  margin-left: -40px; /* Centrage par rapport au left */
+  transition: left 0.4s ease-in-out;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+/* Positions fixes adaptées à ton conteneur de 560px */
+.cup-pos-0 { left: 20%; }
+.cup-pos-1 { left: 50%; }
+.cup-pos-2 { left: 80%; }
+
+.cup-img {
+  width: 100%;
+  font-size: 3.5rem; /* On grossit la tasse */
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+}
+
+/* La tasse se lève de 60px pour bien dégager la vue */
+.cup-wrapper.lifted .cup-img {
+  transform: translateY(-60px);
+}
+
+.sugar-cube {
+  position: absolute;
+  bottom: 25px; /* On remonte le bonbon dans la zone visible */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem; /* On grossit le bonbon */
+  opacity: 0;
+  z-index: 1;
+  user-select: none;
+  pointer-events: none; /* Évite qu'on clique sur le bonbon par erreur */
+}
+.cup-wrapper.winner.lifted .sugar-cube {
+  opacity: 1;
+}
+
+.tasses-start-btn {
+  margin-top: 30px;
+  padding: 8px 20px;
+  background: rgba(255, 255, 255, 0.13); /* Transparence comme le Simon */
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  color: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.tasses-start-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.tasses-start-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ===================================================================
+   PANNEAU DE PROGRESSION (sidebar)
+=================================================================== */
 .progress-toggle {
   position: fixed;
   top: 16px;
   right: 16px;
   z-index: 8000;
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: none;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255,255,255,0.13);
   backdrop-filter: blur(6px);
   color: #fff;
-  font-size: 1.1rem;
+  font-size: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -406,19 +502,20 @@ html, body {
   transition: background 0.2s ease, transform 0.2s ease;
 }
 .progress-toggle:hover {
-  background: rgba(255, 255, 255, 0.28);
+  background: rgba(255,255,255,0.25);
   transform: scale(1.08);
 }
+
 .progress-panel {
   position: fixed;
   top: 0; right: 0;
   height: 100%;
-  width: 280px;
-  max-width: 85vw;
+  width: 260px;
+  max-width: 82vw;
   z-index: 9000;
-  background: rgba(15, 15, 20, 0.92);
-  backdrop-filter: blur(10px);
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(14,14,20,0.94);
+  backdrop-filter: blur(12px);
+  border-left: 1px solid rgba(255,255,255,0.08);
   transform: translateX(100%);
   transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
   display: flex;
@@ -430,17 +527,17 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 16px 16px;
-  font-size: 1rem;
+  padding: 20px 16px 14px;
+  font-size: 0.95rem;
   font-weight: 600;
   color: #fff;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 .progress-close {
   background: none;
   border: none;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 1.1rem;
+  color: rgba(255,255,255,0.5);
+  font-size: 1rem;
   cursor: pointer;
   padding: 4px 8px;
   transition: color 0.2s ease;
@@ -450,51 +547,51 @@ html, body {
 .progress-list {
   list-style: none;
   margin: 0;
-  padding: 12px 0;
+  padding: 8px 0;
   overflow-y: auto;
   flex: 1;
 }
 .progress-item {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 12px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  transition: background 0.15s ease;
+  gap: 12px;
+  padding: 11px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
 }
-.progress-item:hover { background: rgba(255, 255, 255, 0.04); }
-
 .progress-status {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.07);
-  color: rgba(255, 255, 255, 0.3);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.25);
   transition: background 0.3s ease, color 0.3s ease;
 }
 .progress-status.solved {
-  background: rgba(25, 135, 84, 0.25);
+  background: rgba(25,135,84,0.25);
   color: #2ecc71;
 }
-.progress-info { flex: 1; min-width: 0; }
+.progress-info {
+  flex: 1;
+  min-width: 0;
+}
 .progress-name {
-  font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.83rem;
+  color: rgba(255,255,255,0.8);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .progress-digit {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: bold;
-  color: rgba(255, 255, 255, 0.2);
+  color: rgba(255,255,255,0.18);
   transition: color 0.3s ease;
-  min-width: 28px;
+  min-width: 24px;
   text-align: right;
 }
 .progress-digit.solved { color: #f1c40f; }
@@ -503,205 +600,12 @@ html, body {
   position: fixed;
   inset: 0;
   z-index: 8999;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0,0,0,0.3);
 }
 
-/* ===== Game footer : 3 colonnes (gauche / centre / droite) ===== */
-.game-footer {
-  padding: 6px 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-shrink: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.nav-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255, 255, 255, 0.13);
-  color: #fff;
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-.nav-btn:hover { background: rgba(255, 255, 255, 0.28); }
-
-/* Chiffre central du footer */
-.footer-digit {
-  font-size: 1.6rem;
-  font-weight: bold;
-  color: #f1c40f;
-  min-width: 36px;
-  text-align: center;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-.footer-digit.visible { opacity: 1; }
-
-/* ===== Jeu 3 : Roses ===== */
-.game-instruction {
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.55);
-  margin-bottom: 10px;
-  text-align: center;
-}
-.roses-zone {
-  display: flex;
-  gap: 12px;
-  font-size: 2rem;
-  margin-bottom: 10px;
-}
-.rose {
-  cursor: pointer;
-  user-select: none;
-  filter: grayscale(100%) brightness(0.7);
-  transition: filter 0.3s ease, transform 0.2s ease;
-}
-.rose[data-painted="1"] {
-  filter: none;
-  transform: scale(1.15) rotate(-4deg);
-}
-.rose:hover { transform: scale(1.1); }
-
-.chest-wrapper { min-height: 40px; text-align: center; }
-.chest {
-  font-size: 2rem;
-  cursor: pointer;
-  animation: chestPop 0.4s ease;
-  transition: transform 0.15s ease;
-}
-.chest:hover { transform: scale(1.15); }
-@keyframes chestPop {
-  from { transform: scale(0); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
-}
-
-/* ===== Jeu 4 : Swipe ===== */
-.swipe-zone {
-  width: 180px;
-  height: 110px;
-  border: 2px dashed rgba(255,255,255,0.2);
-  border-radius: 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  touch-action: none;
-  user-select: none;
-  outline: none;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-.swipe-zone.flash { background: rgba(13,110,253,0.2); }
-.swipe-zone.error { background: rgba(220,53,69,0.2); }
-.swipe-progress-text {
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.5);
-}
-.swipe-indicators {
-  display: flex;
-  gap: 4px;
-  margin-top: 4px;
-}
-.swipe-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  transition: background 0.2s ease;
-}
-.swipe-dot.done  { background: #2ecc71; }
-.swipe-dot.error { background: #e74c3c; }
-
-/* ===== Jeu 5 : Cadenas ===== */
-.lock-visual {
-  text-align: center;
-  margin-bottom: 6px;
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-.lock-visual.opened { color: #2ecc71; transform: scale(1.1) rotate(-8deg); }
-.lock-visual.shake  { animation: shakeLock 0.4s ease; color: #e74c3c; }
-@keyframes shakeLock {
-  0%,100% { transform: translateX(0); }
-  25%     { transform: translateX(-6px); }
-  75%     { transform: translateX(6px); }
-}
-.code-display { display: flex; justify-content: center; }
-.code-input {
-  width: 36px;
-  height: 44px;
-  font-size: 1.3rem;
-  font-weight: bold;
-  text-align: center;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 6px;
-  color: #fff;
-  outline: none;
-}
-.code-input:focus { border-color: var(--bs-warning); }
-
-.numpad {
-  display: grid;
-  grid-template-columns: repeat(3, 44px);
-  gap: 5px;
-  margin: 6px auto;
-  width: fit-content;
-}
-.numpad-btn {
-  width: 44px;
-  height: 36px;
-  font-size: 1rem;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 6px;
-  color: #fff;
-  cursor: pointer;
-  touch-action: manipulation;
-  transition: background 0.15s ease;
-}
-.numpad-btn:hover    { background: rgba(255,255,255,0.22); }
-.btn-clear, .btn-back { font-size: 0.75rem; }
-
-.btn-try {
-  display: block;
-  margin: 6px auto 0;
-  padding: 5px 20px;
-  background: rgba(255,193,7,0.2);
-  border: 1px solid var(--bs-warning);
-  border-radius: 20px;
-  color: #fff;
-  cursor: pointer;
-  font-size: 0.88rem;
-  transition: background 0.2s ease;
-}
-.btn-try:hover { background: rgba(255,193,7,0.4); }
-
-.lock-msg {
-  text-align: center;
-  font-size: 0.78rem;
-  color: #e74c3c;
-  margin-top: 4px;
-}
-
-/* Confettis canvas */
-#confettiCanvas {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: 9998;
-  display: none;
-}
-
-/* ===== Récompense finale ===== */
+/* =================================================================
+   RÉCOMPENSE FINALE
+================================================================= */
 .reward-overlay {
   position: fixed;
   inset: 0;
@@ -712,13 +616,10 @@ html, body {
   animation: rewardFadeIn 0.6s ease forwards;
 }
 .reward-overlay.d-none { display: none !important; }
-
 @keyframes rewardFadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
-
-/* Fond flouté et légèrement assombri */
 .reward-backdrop {
   position: absolute;
   inset: 0;
@@ -726,8 +627,6 @@ html, body {
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
-
-/* Boîte centrale */
 .reward-box {
   position: relative;
   z-index: 1;
@@ -736,30 +635,26 @@ html, body {
   align-items: center;
   gap: 16px;
   animation: rewardPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both,
-  haloGlow 2.5s ease-in-out 1s infinite; /* ajoute juste cette ligne */
-}
-
-@keyframes haloGlow {
-  0%, 100% {
-    filter: drop-shadow(0 0 10px rgba(255, 193, 7, 0.3))
-    drop-shadow(0 0 30px rgba(255, 193, 7, 0.1));
-  }
-  50% {
-    filter: drop-shadow(0 0 20px rgba(255, 193, 7, 0.8))
-    drop-shadow(0 0 60px rgba(255, 193, 7, 0.3))
-    drop-shadow(0 0 90px rgba(255, 140, 0, 0.2));
-  }
+             haloGlow 2.5s ease-in-out 1s infinite;
 }
 @keyframes rewardPopIn {
   from { transform: scale(0.6); opacity: 0; }
   to   { transform: scale(1);   opacity: 1; }
 }
-
-/* ===== Coffre / icône centrale ===== */
+@keyframes haloGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px rgba(255,193,7,0.3))
+            drop-shadow(0 0 30px rgba(255,193,7,0.1));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(255,193,7,0.8))
+            drop-shadow(0 0 60px rgba(255,193,7,0.3))
+            drop-shadow(0 0 90px rgba(255,140,0,0.2));
+  }
+}
 .reward-chest {
   font-size: 3.5rem;
   animation: chestFloat 2s ease-in-out infinite;
-  filter: drop-shadow(0 0 12px rgba(255, 193, 7, 0.8));
 }
 .chest-lid {
   animation: lidBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.8s both;
@@ -774,18 +669,13 @@ html, body {
   from { transform: rotateX(90deg) scale(0.5); opacity: 0; }
   to   { transform: rotateX(0deg)  scale(1);   opacity: 1; }
 }
-
-/* ===== Contenu : label + URL ===== */
-.reward-content {
-  text-align: center;
-  animation: rewardSlideUp 0.5s ease 1s both;
-}
+.reward-content { text-align: center; animation: rewardSlideUp 0.5s ease 1s both; font-size: 1.6rem; }
 @keyframes rewardSlideUp {
   from { transform: translateY(20px); opacity: 0; }
   to   { transform: translateY(0);    opacity: 1; }
 }
 .reward-label {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255,255,255,0.7);
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -794,8 +684,8 @@ html, body {
 .reward-url {
   display: inline-block;
   padding: 10px 20px;
-  background: rgba(255, 193, 7, 0.15);
-  border: 1px solid rgba(255, 193, 7, 0.5);
+  background: rgba(255,193,7,0.15);
+  border: 1px solid rgba(255,193,7,0.5);
   border-radius: 24px;
   color: #f1c40f;
   font-size: 0.95rem;
@@ -803,31 +693,113 @@ html, body {
   text-decoration: none;
   word-break: break-all;
   max-width: 280px;
-  transition: background 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 0 16px rgba(255, 193, 7, 0.2);
+  box-shadow: 0 0 16px rgba(255,193,7,0.2);
   animation: urlPulse 2s ease-in-out 1.5s infinite;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 .reward-url:hover {
-  background: rgba(255, 193, 7, 0.3);
-  box-shadow: 0 0 24px rgba(255, 193, 7, 0.4);
+  background: rgba(255,193,7,0.3);
+  box-shadow: 0 0 24px rgba(255,193,7,0.4);
   color: #fff;
 }
 @keyframes urlPulse {
-  0%, 100% { box-shadow: 0 0 16px rgba(255, 193, 7, 0.2); }
-  50%       { box-shadow: 0 0 28px rgba(255, 193, 7, 0.5); }
+  0%, 100% { box-shadow: 0 0 16px rgba(255,193,7,0.2); }
+  50%       { box-shadow: 0 0 28px rgba(255,193,7,0.5); }
 }
-
 .replay-games-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.25);
   border-radius: 20px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255,255,255,0.7);
   padding: 7px 18px;
   font-size: 0.82rem;
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease;
 }
 .replay-games-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255,255,255,0.2);
   color: #fff;
 }
+
+/* =================================================================
+   JEU 5 : CADENAS
+================================================================= */
+.lock-visual {
+  text-align: center;
+  margin-bottom: 10px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.lock-visual.opened { color: #2ecc71; transform: scale(1.1) rotate(-8deg); }
+.lock-visual.shake  { animation: shakeLock 0.4s ease; color: #e74c3c; }
+@keyframes shakeLock {
+  0%,100% { transform: translateX(0); }
+  25%     { transform: translateX(-6px); }
+  75%     { transform: translateX(6px); }
+}
+.code-display { display: flex; justify-content: center; }
+.code-input {
+  width: 44px;
+  height: 52px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  color: #fff;
+  outline: none;
+}
+.code-input:focus { border-color: var(--bs-warning); }
+.lock-msg {
+  text-align: center;
+  font-size: 0.82rem;
+  color: #e74c3c;
+  margin-top: 6px;
+}
+
+/* Confettis canvas */
+#confettiCanvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+  display: none;
+}
+
+/* =================================================================
+   GAME FOOTER 3 colonnes
+================================================================= */
+.game-footer {
+  padding: 6px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.13);
+  color: #fff;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.nav-btn:hover { background: rgba(255,255,255,0.28); }
+.footer-digit {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #f1c40f;
+  min-width: 36px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.footer-digit.visible { opacity: 1; }

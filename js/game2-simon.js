@@ -11,7 +11,7 @@
  */
 (function () {
     const GAME_ID         = 2;
-    const DIGIT           = 9; // chiffre révélé par cette épreuve
+    const DIGIT           = 0;
     const SEQUENCE_LENGTH = 4;
 
     const buttons  = document.querySelectorAll('#slide-2 .simon-btn');

@@ -12,7 +12,7 @@
  */
 (function () {
     const GAME_ID = 1;
-    const DIGIT   = 7; // Code a la fin du jeu
+    const DIGIT   = 2; // Code a la fin du jeu
 
     const flamingo         = document.getElementById('flamingo');
     const hedgehog         = document.getElementById('hedgehog');

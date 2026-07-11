@@ -8,7 +8,7 @@
  */
 (function () {
   const GAME_ID = 3;
-  const DIGIT   = 4;
+  const DIGIT   = 2;
 
   const roses   = document.querySelectorAll('#rosesZone .rose');
   const chest   = document.getElementById('chestIcon');
@@ -24,6 +24,7 @@
       if (rose.dataset.painted === '1') return;
       rose.dataset.painted = '1';
       rose.textContent = '🌹';
+      rose.classList.remove('grise');
       if (allPainted()) chest.classList.remove('d-none');
     });
   });

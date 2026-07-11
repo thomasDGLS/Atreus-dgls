@@ -65,7 +65,11 @@
       <div class="game-slide" id="slide-1">
         <div class="game-header">
           <span class="game-title">Épreuve 1 — Flamant &amp; Hérisson</span>
-          <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="right" data-bs-content="Tiens, un nouveau visage… Perdu ? Pas encore ! </br>Vous voici à la première escale de notre folie. Pour passer, il vous faudra jouer au croquet de la Reine. </br>Retenez bien ceci : Faites courber le cou au volatile rose pour propulser la bête piquante sous son arche de cartes. </br>Un coup parfait, et le chemin s'ouvrira. Ratez, et… qu’on leur coupe la tête ! </br>">
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="
+            Tiens, un nouveau visage… Perdu ? Pas encore !
+            Vous voici à la première escale de notre folie. Pour passer, il vous faudra jouer au croquet de la Reine.
+            Retenez bien ceci : Faites courber le cou au volatile rose pour propulser la bête piquante sous son arche de cartes.
+            Un coup parfait, et le chemin s'ouvrira. Ratez, et… qu’on leur coupe la tête !">
             <i class="fa-solid fa-question"></i>
           </button>
         </div>
@@ -82,7 +86,6 @@
             </div>
           </div>
         </div>
-        <!-- footer-1 -->
         <div class="game-footer d-none" id="footer-1">
           <button class="nav-btn prev-btn d-none" id="prevBtn1">
             <i class="fa-solid fa-arrow-left"></i>
@@ -98,19 +101,25 @@
       <div class="game-slide" id="slide-2">
         <div class="game-header">
           <span class="game-title">Épreuve 2 — Mémorise la séquence</span>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="
+            Mmmh, de nouvelles figures à déchiffrer...
+            Voici l’heure de la parade de Sa Majesté. Ouvrez grand les yeux, car ses gardes vont s’allumer dans un ordre précis.
+            Mémorisez leur séquence de lumière, puis, touchez-les dans l’ordre exact de leur éveil.
+            Un seul faux pas... et clic ! Plus de tête ! Hihihi.">
+            <i class="fa-solid fa-question"></i>
+          </button>
         </div>
         <div class="game-body">
           <button class="btn btn-sm btn-outline-info mb-3" id="simonStart">
             <i class="fa-solid fa-play"></i> Lancer
           </button>
           <div class="simon-grid">
-            <button class="simon-btn" data-color="0" style="background:#e53935;"><span style="font-size: 1.5rem;">&hearts;</span></button>
-            <button class="simon-btn" data-color="1" style="background:#1e88e5;"><span style="font-size: 1.5rem;">&diams;</span></button>
-            <button class="simon-btn" data-color="2" style="background:#43a047;"><span style="font-size: 1.5rem;">&spades;</span></button>
-            <button class="simon-btn" data-color="3" style="background:#fdd835;"><span style="font-size: 1.5rem;">&clubs;</span></button>
+            <button class="simon-btn" data-color="0" style="background:#ffffff;"><span style="font-size:1.5rem;">&hearts;</span></button>
+            <button class="simon-btn" data-color="1" style="background:#ffffff;"><span style="font-size:1.5rem;">&clubs;</span></button>
+            <button class="simon-btn" data-color="2" style="background:#ffffff;"><span style="font-size:1.5rem;">&spades;</span></button>
+            <button class="simon-btn" data-color="3" style="background:#ffffff;"><span style="font-size:1.5rem;">&diams;</span></button>
           </div>
         </div>
-        <!-- footer-2 -->
         <div class="game-footer d-none" id="footer-2">
           <button class="nav-btn prev-btn" id="prevBtn2">
             <i class="fa-solid fa-arrow-left"></i>
@@ -126,15 +135,20 @@
       <div class="game-slide" id="slide-3">
         <div class="game-header">
           <span class="game-title">Épreuve 3 — Peins toutes les roses</span>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="
+            Horreur ! Quelqu'un a planté des roses de la mauvaise couleur...
+            Si la Reine voit ce jardin si terne, elle va perdre la tête (et nous la nôtre !). Vite, effacez cette triste pâleur d'un simple toucher.
+            Étalez votre plus beau rouge sur chacune d'elles avant qu'Elle n'arrive.. Prenez vos pinceaux... ou fuyez !">
+            <i class="fa-solid fa-question"></i>
+          </button>
         </div>
         <div class="game-body">
-          <p class="game-instruction">Clique sur chaque rose pour la peindre en rouge.</p>
           <div class="roses-zone" id="rosesZone">
-            <span class="rose" data-painted="0">🥀</span>
-            <span class="rose" data-painted="0">🥀</span>
-            <span class="rose" data-painted="0">🥀</span>
-            <span class="rose" data-painted="0">🥀</span>
-            <span class="rose" data-painted="0">🥀</span>
+            <span class="rose grise" data-painted="0">🥀</span>
+            <span class="rose grise" data-painted="0">🥀</span>
+            <span class="rose grise" data-painted="0">🥀</span>
+            <span class="rose grise" data-painted="0">🥀</span>
+            <span class="rose grise" data-painted="0">🥀</span>
           </div>
           <div class="chest-wrapper">
             <span class="chest d-none" id="chestIcon" role="button">📦</span>
@@ -151,21 +165,35 @@
         </div>
       </div>
 
-      <!-- Slide 4 : Swipe -->
+      <!-- Slide 4 : Tasses -->
       <div class="game-slide" id="slide-4">
         <div class="game-header">
-          <span class="game-title">Épreuve 4 — Balaye dans l'ordre</span>
+          <span class="game-title">Épreuve 4 — Le Bonneteau du Chapelier</span>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="
+            Prenez place ! Le Chapelier s’impatiente…
+            Une petite douceur s’est glissée sous l'une de ces tasses en porcelaine. Regardez bien, car la table va se mettre à tourner !
+            Suivez des yeux le bonbon caché et ne le lâchez pas du regard pendant la danse des tasses.
+            Alors... saurez-vous deviner où se cache la friandise ? Ne vous trompez pas de thé !">
+            <i class="fa-solid fa-question"></i>
+          </button>
         </div>
         <div class="game-body">
-          <p class="game-instruction">
-            Ordre : <strong>↑ ↑ ← → ↑ ↓</strong>
-          </p>
-          <div class="swipe-zone" id="swipeZone" tabindex="0">
-            <i class="fa-solid fa-arrows-up-down-left-right fs-2"></i>
-            <div class="swipe-progress-text" id="swipeProgressText">0 / 6</div>
-            <div class="swipe-indicators" id="swipeIndicators"></div>
+          <div class="cups-zone">
+            <div class="cup-wrapper cup-pos-0" id="cup-0">
+              <div class="cup-img">☕</div>
+              <div class="sugar-cube">🍬</div>
+            </div>
+            <div class="cup-wrapper cup-pos-1" id="cup-1">
+              <div class="cup-img">☕</div>
+              <div class="sugar-cube">🍬</div>
+            </div>
+            <div class="cup-wrapper cup-pos-2" id="cup-2">
+              <div class="cup-img">☕</div>
+              <div class="sugar-cube">🍬</div>
+            </div>
           </div>
         </div>
+        <button id="startTassesBtn" class="tasses-start-btn">Mélanger les tasses</button>
         <div class="game-footer d-none" id="footer-4">
           <button class="nav-btn prev-btn" id="prevBtn4">
             <i class="fa-solid fa-arrow-left"></i>
@@ -192,9 +220,9 @@
             <input type="text" inputmode="numeric" maxlength="1" class="code-input" data-idx="2">
             <input type="text" inputmode="numeric" maxlength="1" class="code-input" data-idx="3">
           </div>
-          <div class="lock-msg d-none" id="lockErrorMsg">Code incorrect !</div>
+          <div class="lock-msg d-none" id="lockErrorMsg">Le cadenas tremble... Code incorrect !</div>
         </div>
-        <div class="game-footer" id="footer-5">
+        <div class="game-footer d-none" id="footer-5">
           <button class="nav-btn prev-btn" id="prevBtn5">
             <i class="fa-solid fa-arrow-left"></i>
           </button>
@@ -234,15 +262,22 @@
     </div>
     <div class="reward-content">
       <p class="reward-label">Félicitation !</p>
-      <a id="rewardUrl" class="reward-url" href="#" target="_blank">
-        <!-- URL insérée par JS -->
-      </a>
+      <p>
+        Incroyable ! Vous n'êtes pas aussi fous que vous en avez l'air... </br>
+        Vous avez déjoué tous les pièges du Pays des Merveilles avec brio ! La Reine a rangé ses cartes, le Chapelier vous salue bien bas, et le Lapin Blanc a enfin arrêté de courir.</br>
+        Le terrier est désormais grand ouvert devant vous. Cliquez juste en dessous pour y découvrir la liste des merveilles de notre futur bébé !</br>
+        Merci d'avoir joué avec nous... et à très vite pour la suite de l'aventure !
+      </p>
+
+      <a id="rewardUrl" class="reward-url" href="#" target="_blank"></a>
     </div>
     <button id="replayGamesBtn" class="replay-games-btn mt-3">
       <i class="fa-solid fa-rotate-left"></i> Rejouer
     </button>
   </div>
 </div>
+
+<canvas id="confettiCanvas"></canvas>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 <script src="js/orientation.js"></script>
@@ -251,15 +286,13 @@
 <script src="js/game1.js"></script>
 <script src="js/game2-simon.js"></script>
 <script src="js/game3-roses.js"></script>
-<script src="js/game4-swipe.js"></script>
+<script src="js/game4-tasses.js"></script>
 <script src="js/game5-cadenas.js"></script>
 <script src="js/intro.js"></script>
-<canvas id="confettiCanvas"></canvas>
 <script src="js/confetti.js"></script>
 <script>
-  // Initialise tous les popovers de la page
-  const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-  const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+  const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+  [...popoverTriggerList].map(el => new bootstrap.Popover(el));
 </script>
 </body>
 </html>

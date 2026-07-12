@@ -8,6 +8,8 @@
   const lockVisual = document.getElementById('lockVisual');
   const lockIcon   = document.getElementById('lockIcon');
   const errorMsg   = document.getElementById('lockErrorMsg');
+  const toggle = document.getElementById('progressToggle');
+  const slide  = document.getElementById('slide-5');
 
   if (!inputs.length || !lockVisual) return;
 
@@ -62,6 +64,7 @@
     if ((entered === expected && !entered.includes('?')) || entered === "2026") {
       // ✅ Succès
       lockVisual.classList.remove('shake');
+      toggle?.classList.remove('bounce-hint');
       lockVisual.classList.add('opened');
       lockIcon.classList.replace('fa-lock', 'fa-lock-open');
       errorMsg.classList.add('d-none');
@@ -83,6 +86,19 @@
       }, 1200);
     }
   }
+
+  /* -------- Vérification si on est sur la slide 5 alors on bonceHint l'aide pour retrouver le code ----- */
+  slide.addEventListener('transitionend', (e) => {
+    // transitionend se déclenche aussi sur exit-left (sortie)
+    // on vérifie que la slide est bien active (visible) avant de lancer
+    if (e.propertyName === 'transform' && slide.classList.contains('active')) {
+      setTimeout(() => toggle?.classList.add('bounce-hint'), 300);
+    }
+    // Quand la slide quitte l'écran, on retire l'animation
+    if (!slide.classList.contains('active')) {
+      toggle?.classList.remove('bounce-hint');
+    }
+  });
 
   window.showReward = function (url) {
     const REWARD_URL = 'https://listesdecadeaux.com/l-sroqtzJ/liste-de-naissance/';

@@ -672,7 +672,7 @@ html, body {
   from { transform: rotateX(90deg) scale(0.5); opacity: 0; }
   to   { transform: rotateX(0deg)  scale(1);   opacity: 1; }
 }
-.reward-content { text-align: center; animation: rewardSlideUp 0.5s ease 1s both; font-size: clamp(12px, 3vw, 10px); }
+.reward-content { text-align: center; animation: rewardSlideUp 0.5s ease 1s both; font-size: clamp(20px, 3vw, 10px); }
 @keyframes rewardSlideUp {
   from { transform: translateY(20px); opacity: 0; }
   to   { transform: translateY(0);    opacity: 1; }
@@ -728,6 +728,18 @@ html, body {
 /* =================================================================
    JEU 5 : CADENAS
 ================================================================= */
+.bounce-hint {
+  animation: bounceHint 1s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+}
+
+@keyframes bounceHint {
+  0%, 100% { transform: scale(1); }
+  20%       { transform: scale(1.25) rotate(-8deg); }
+  40%       { transform: scale(0.95) rotate(4deg); }
+  60%       { transform: scale(1.15) rotate(-4deg); }
+  80%       { transform: scale(0.98) rotate(2deg); }
+}
+
 .lock-visual {
   text-align: center;
   margin-bottom: 10px;
